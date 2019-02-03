@@ -1,0 +1,43 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+<div class="main">
+  <div class="main-content">
+    <div class="container-fluid">
+  	   <h3 class="page-title">Agregar usuario</h3>
+  			  <div class="row">
+            <div class="col-md-12">
+              <div class="panel">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Ingresa los datos requeridos</h3>
+								</div>
+                <form class="" action="{% url 'usuario:register' %}" method="post">
+                <div class="panel-body">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+                      <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                      <p style="color:red">{{ error }}</p>
+                    {% endfor %}
+                  </p>
+                  {% endfor %}
+                </div>
+                <div class="panel-footer">
+									<div class="row">
+										<div class="col-md-12 text-right">
+                      <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                    </div>
+									</div>
+                </form>
+								</div>
+								</div>
+							</div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

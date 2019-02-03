@@ -1,0 +1,148 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<!-- OVERVIEW -->
+					<div class="panel panel-headline">
+						<div class="panel-heading" id="per">
+							<h3 class="panel-title">Progreso Total</h3>
+							<p class="panel-subtitle" id ="Periodo"></p>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div id="headline-chart" class="ct-chart"></div>
+								</div>
+							<!--	<div class="col-md-2">
+								{% for proyecto in proyectos|slice:":3" %}
+									<div class="weekly-summary text-right">
+										<span class="number">2,315</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 12%</span>
+										<span class="info-label">Proyecto 1</span>
+									</div>
+								{% endfor %}
+								</div>-->
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="metric">
+										<span class="icon"><i class="fa fa-shopping-bag"></i></span>
+										<p>
+											<span class="number">{{ proyectos|length }}</span>
+											<span class="title">Proyectos Activos</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END OVERVIEW -->
+					<div class="row">
+						<div class="col-md-12">
+							<!-- RECENT PURCHASES -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Proyectos Actuales</h3>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body no-padding">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												{% for p in Pheader %}
+												<th>{{ p }}</th>
+												{% endfor %}
+											</tr>
+										</thead>
+										<tbody>
+										{%  for proyecto in proyectos|slice:":10" %}
+											<tr>
+												<td><a href="{% url 'proyecto:detalles' slug=proyecto.slug  %}">{{ proyecto.folio }}</a></td>
+												<td>{{proyecto.tomo}}</td>
+												<td>{{proyecto.enajenante}}</td>
+												<td>{{proyecto.adquirente}}</td>
+												<td>{{proyecto.fecha}}</td>
+												<td>{{proyecto.tipo_proyecto}}</td>
+												<td><span class="label label-success"></span></td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									<div class="row">
+										<div class="col-md-12 text-right"><a href="{% url 'proyecto:actuales' %}" class="btn btn-primary">Ver todos los proyectos</a></div>
+									</div>
+								</div>
+							</div>
+							<!-- END RECENT PURCHASES -->
+						</div>
+					</div>
+				</div>
+			</div>
+			 {% include "Scripts.html" %}
+
+			<script type="text/javascript">
+						var meses=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+						d = new Date();
+						document.getElementById("Periodo").innerHTML = "Periodo: "+meses[d.getMonth()-1]+"/"+d.getFullYear()+" - "+ meses[d.getMonth()]+"/"+d.getFullYear();
+						//console.log("NUmero de proyectos"+'{{numProyectos}}');
+						//console.log('{{dataGrafica}}');
+						var datag = '{{dataGrafica}}';
+						//console.log(datag[0]);
+						var array = [];
+						for(i = 0; i<datag.length; i++){
+							if(datag[i] != '[' && datag[i] !=']' && datag[i]!=',' && datag[i]!=' ' )
+								array.push(datag[i]);
+							//console.log(datag[i]);
+
+						}
+						//console.log("arreglo: "+array);
+						sem1 = {}
+						$(function() {
+								var data, options;
+								// headline charts
+								data = {
+									labels: ['Proy-1', 'Proy-2', 'Proy-3', 'Proy-4','Proy-5','Proy-6', 'Proy-7', 'Proy-8', 'Proy-9','Proy-10'],
+									series: [array,],
+								};
+								options = {
+									height: 300,
+									low: 1,
+									showArea: true,
+									showLine: true,
+									showPoint: true,
+									fullWidth: true,
+									lineSmooth: Chartist.Interpolation.cardinal({
+		    										tension: 0.5,
+													}),
+									axisX: {
+										showGrid: true,
+									},
+									axisY: {
+										//type: Chartist.FixedScaleAxis,
+										//ticks: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+										high: 20,
+										low: 1
+									},
+								};
+								var responsiveOptions = [
+								  ['screen and (min-width: 640px)', {
+								    axisX: {
+								      labelInterpolationFnc: function(value, index) {
+								        return index % 4 === 0 ? 'W' + value : null;
+								      }
+								    }
+								  }]
+								];
+
+								new Chartist.Line('#headline-chart', data, options,responsiveOptions);
+							});
+
+			</script>
+{% endblock %}

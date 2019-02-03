@@ -1,0 +1,46 @@
+{% load static %}
+<div id="wrapper">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="brand">
+				<a href="{% url 'proyecto:general' %}"><img src="" alt="Notaria Logo" class="img-responsive logo"></a>
+			</div>
+			<div class="container-fluid" >
+				<div class="navbar-btn">
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+				</div>
+				<form class="navbar-form navbar-left" action="{% url 'proyecto:buscar'  %}" method="get">
+					{% csrf_token %}
+					<div class="input-group">
+						<input type="text" value="" id="buscar" name="b" class="form-control" placeholder="Buscar escritura...">
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary">Buscar</button></span>
+					</div>
+				</form>
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ayuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Uso Basico</a></li>
+								<li><a href="#">Solucionar Problemas</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{% static 'assets/img/user.png' %}" class="img-circle" alt="Avatar"> <span>{{request.user.username}}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="lnr lnr-user"></i> <span>Perfil</span></a></li>
+								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
+								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Opciones</span></a></li>
+								<li>
+									<form class="" action="{% url 'usuario:logout' %}" method ="post">
+										{% csrf_token %}
+										<i class="lnr lnr-exit" style="margin: 15px"></i>
+										<span><button style="border:none; background-color: Transparent; padding:2px; margin: 10px auto  " type="submit" >Logout</button></span>
+									</form>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>

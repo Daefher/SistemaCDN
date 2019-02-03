@@ -1,0 +1,28 @@
+{% load static %}
+
+<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<li>
+							<div class="profile-header">
+							<div class="profile-main">
+								<img src="{% static 'assets\img\user-medium.png' %}" alt="avatar" class="img-circle">
+								<h3 class="name-center ">{{request.user}}</h3>
+								<span class="online-status status-available"> Conectado</span>
+							</div>
+							</div>
+						</li>
+						{% with url_name=request.resolver_match.url_name %}
+							<li><a href="{% url 'proyecto:general' %}" class="{% if url_name == 'general' %}active{% endif %}"><i class="lnr lnr-home"></i> <span>Vista General</span></a></li>
+							<li><a href="{% url 'proyecto:actuales' %}" class="{% if url_name == 'actuales' %}active{% endif %}"><i class="lnr lnr-dice"></i> <span>Proyectos</span></a></li>
+							<li><a href="{% url 'proyecto:agregar' %}" class="{% if url_name == 'agregar' %}active{% endif %}"><i class="lnr lnr-chart-bars"></i> <span>Agregar Proyecto</span></a></li>
+							<li><a href="{% url 'proyecto:progreso' %}" class="{% if url_name == 'progreso' %}active{% endif %}"><i class="lnr lnr-pencil"></i> <span>Agregar Progreso</span></a></li>
+							{% if user.is_superuser %}
+							<li><a href="{% url 'usuario:register' %}" class="{% if url_name == 'register' %}active{% endif %}"><i class="lnr lnr-users"></i> <span>Agregar Usuario</span></a></li>
+							{% endif %}
+						{% endwith %}
+						
+				</nav>
+			</div>
+		</div>

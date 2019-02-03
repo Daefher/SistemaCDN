@@ -1,0 +1,109 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="main">
+    <div class="main-content">
+    <div class="container-fluid">
+      <h3 class="page-title">Proyecto {{proyect.enajenante}} </h3>
+    <div class="row">
+     <div class="col-md-12">
+      <div class="panel">
+    			<div class="profile-detail">
+            <div class="profile-info">
+							<ul class="list-unstyled list-justify">
+                <h4 class="heading">Detalles</h4>
+									<li>Folio <span>{{proyect.folio}}</span></li>
+									<li>Tomo <span>{{proyect.tomo}}</span></li>
+									<li>Enajenante <span>{{proyect.enajenante}}</span></li>
+									<li>Adquirente <span>{{proyect.adquirente}}</span></li>
+                  <li><div class="progress">
+										<div class="progress-bar progress-bar-striped active" id="barra" role="progressbar" style="width: '{{pro.pro}}%'"  >
+											<span class="sr-only"></span>
+										</div>
+									</div></li>
+									<li>
+										<div class="col-md-12 text-right"><a href="{% url 'proyecto:editar' id=proyect.folio %}" class="btn btn-primary">Editar Proyecto</a>
+										</div>
+									</li>
+							</ul>
+						</div>
+    			</div>
+    		</div>
+      </div>
+    </div>
+		<div class="row">
+			<div class="col-md-12">
+			<div class="panel">
+				<div class="panel-heading">
+					<h3 class="panel-title">Progresos</h3>
+						<div class="right">
+							<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+								<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body">
+									<ul class="list-unstyled todo-list">
+										{% for prog in pro %}
+											{% if prog.estado %}
+											<li class="completed">
+												<p>
+													<span class="title">{{prog.titulo}}</span>
+													<span class="short-description">{{prog.description}}</span>
+													<span class="date">{{prog.fecha}}</span>
+												</p>
+												<label class="control-inline">
+													<a href="{% url 'proyecto:agregar_pro' id=prog.idProgreso %}" class="btn btn-info">Estado</a>
+												</label>
+												</li>
+												<div class="controls">
+													<a href="#"><i class="icon-software icon-software-pencil"></i></a> <a href="#"><i class="icon-arrows icon-arrows-circle-remove"></i></a>
+												</div>
+												{% else %}
+												<li>
+													<p>
+														<span class="title">{{prog.titulo}}</span>
+														<span class="short-description">{{prog.description}}</span>
+														<span class="date">{{prog.fecha}}</span>
+													</p>
+													<label class="control-inline">
+														<a href="{% url 'proyecto:agregar_pro' id=prog.idProgreso %}" class="btn btn-primary">Estado</a>
+													</label>
+													</li>
+
+											{% endif %}
+										{% endfor %}
+									</ul>
+											<div class="panel-footer">
+													<div class="row">
+														<div class="col-md-12 text-right">Los progresos serán tachados</div>
+													</div>
+											</div>
+								</div>
+			</div>
+			</div>
+		</div>
+		</div>
+    </div>
+    </div>
+    </div>
+		
+  </div> 
+   {% include "Scripts.html" %}
+
+	<script type="text/javascript">
+		var progreso = "{{progress}}";
+		var Noterminado =  "{{NoTerminado}}";
+		var terminados = "{{terminados}}";
+		var actual;
+		if(progreso != 0){
+			actual = terminados*100/progreso;
+		}else{
+			actual = 0;
+		}
+		console.log(progreso,Noterminado,terminados,actual);
+
+		document.getElementById('barra').style.width = actual+"%";
+	</script>
+
+{% endblock %}
+

@@ -1,0 +1,48 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+<div class="main">
+<div class="main-content">
+<div class="container-fluid">
+  <h3 class="page-title">Proyectos actuales registrados</h3>
+<div class="row">
+ <div class="col-md-12">
+  <div class="panel">
+      <div class="panel-heading">
+				<h3 class="panel-title">Proyectos Encontrados</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table project-table">
+					<thead>
+						<tr>
+              {% for Pheader in Pheader%}
+					        <th>{{Pheader}}</th>
+              {% endfor %}
+						</tr>
+					</thead>
+					<tbody>
+              {% for results in results %}
+						<tr>
+						      <td>{{results.folio}}</a></td>
+                  <td>{{results.tomo}}</td>
+                  <td>{{results.enajenante}}</td>
+                  <td>{{results.adquirente}}</td>
+                  <td>{{results.autor}}</td>
+                  <td>{{results.fecha}}</td>
+                  <td>{{results.tipo_proyecto}}</td>
+                  <td>{{results.localizacion}}</td>                  
+            </tr>
+            {% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+  proy = '{{results.autor}}'
+  console.log("proyectista"+proy)
+</script>
+  {% endblock %}
